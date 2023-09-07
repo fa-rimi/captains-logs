@@ -15,12 +15,21 @@ app.set("view engine", "jsx");
 app.engine("jsx", jsxEngine());
 
 /**
- * @method GET
+ * @method get
  * @description checking to see if it works
  */
 app.get("/", (req, res) => {
   res.send("And we are live!");
   console.log("And we are live!");
+});
+
+/**
+ * @name New
+ * @method get
+ * @description render new form
+ */
+app.get("/logs/new", (req, res) => {
+    res.send("new")
 });
 
 /**
