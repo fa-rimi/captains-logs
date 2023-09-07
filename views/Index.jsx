@@ -1,5 +1,5 @@
 // views/Index.jsx
-import React from "react";
+const React = require("react"); // Import React
 
 const Index = (props) => {
   return (
@@ -10,6 +10,9 @@ const Index = (props) => {
         {props.logs.map((log) => (
           <li key={log._id}>
             <a href={`/logs/${log._id}`}>{log.title}</a>
+            <form action={`/logs/${log._id}?_method=DELETE`} method="POST">
+              <button type="submit">Delete</button>
+            </form>
           </li>
         ))}
       </ul>
