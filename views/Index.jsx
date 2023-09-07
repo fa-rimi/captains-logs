@@ -10,6 +10,11 @@ const Index = (props) => {
         {props.logs.map((log) => (
           <li key={log._id}>
             <a href={`/logs/${log._id}`}>{log.title}</a>
+            
+            {/* Link to the edit route for this log entry */}
+            <a href={`/logs/${log._id}/edit`}>Edit</a>
+
+            {/* Delete form for each log entry */}
             <form action={`/logs/${log._id}?_method=DELETE`} method="POST">
               <button type="submit">Delete</button>
             </form>
