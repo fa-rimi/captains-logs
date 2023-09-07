@@ -1,5 +1,5 @@
 // views/New.jsx
-const React = require("react");
+const React = require("react"); // Import React
 
 const New = () => {
   return (

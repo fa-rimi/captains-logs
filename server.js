@@ -1,4 +1,6 @@
-const express = require("express");
+const express = require("express"); // Import express
+const mongoose = require('mongoose'); // Import Mongoose
+require("dotenv").config(); // for .env
 
 // forgot to add this line and got the error ReferenceError: app is not defined
 const app = express();
