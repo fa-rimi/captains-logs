@@ -4,6 +4,16 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
+// Middleware -> To parse JSON and form data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// the JSX view engine
+const jsxEngine = require("jsx-view-engine");
+// app config
+app.set("view engine", "jsx");
+app.engine("jsx", jsxEngine());
+
 /**
  * @method GET
  * @description checking to see if it works
