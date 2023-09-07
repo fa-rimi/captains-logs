@@ -45,7 +45,7 @@ app.get("/logs/new", (req, res) => {
  * Index route (GET)
  */
 app.get("/logs", (req, res) => {
-  res.send("index");
+  res.render("Index");
 });
 
 /**
