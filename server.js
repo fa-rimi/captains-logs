@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
  * @description render new form
  */
 app.get("/logs/new", (req, res) => {
-    res.send("new")
+    res.render("New")
 });
 
 /**
