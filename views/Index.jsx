@@ -1,9 +1,19 @@
-import React from 'react'
+// views/Index.jsx
+import React from "react";
 
-const Index = () => {
+const Index = (props) => {
   return (
-    <div>Index Page</div>
-  )
-}
+    <div>
+      <h1>Log Index</h1>
+      <ul>
+        {/* Render a list of log titles */}
+        {props.logs.map((log) => (
+          <li key={log._id}>{log.title}</li>
+        ))}
+      </ul>
+      <a href="/logs/new">Create Log</a>
+    </div>
+  );
+};
 
-export default Index
+export default Index;
