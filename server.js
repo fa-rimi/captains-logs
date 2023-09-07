@@ -20,16 +20,26 @@ app.engine("jsx", jsxEngine());
 // Connect to MongoDB
 connectDB();
 
-// Routes
+// // Routes
+// /**
+//  * Test Route
+//  * @method get
+//  * @description checking to see if it works
+//  */
+// app.get("/", (req, res) => {
+//   res.send("And we are live!");
+//   console.log("And we are live!");
+// });
 /**
- * Test Route
- * @method get
- * @description checking to see if it works
+ * Index route (GET)
  */
-app.get("/", (req, res) => {
-  res.send("And we are live!");
-  console.log("And we are live!");
+app.get("/logs", (req, res) => {
+  res.render("Index");
 });
+
+/**
+ * 
+ */
 
 /**
  * New Route
@@ -39,13 +49,6 @@ app.get("/", (req, res) => {
  */
 app.get("/logs/new", (req, res) => {
   res.render("New");
-});
-
-/**
- * Index route (GET)
- */
-app.get("/logs", (req, res) => {
-  res.render("Index");
 });
 
 /**
