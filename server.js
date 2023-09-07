@@ -20,26 +20,28 @@ app.engine("jsx", jsxEngine());
 // Connect to MongoDB
 connectDB();
 
-// // Routes
-// /**
-//  * Test Route
-//  * @method get
-//  * @description checking to see if it works
-//  */
-// app.get("/", (req, res) => {
-//   res.send("And we are live!");
-//   console.log("And we are live!");
-// });
 /**
  * Index route (GET)
  */
-app.get("/logs", (req, res) => {
-  res.render("Index");
+app.get("/logs", async (req, res) => {
+  try {
+    // Fetch all logs from the database
+    const logs = await Log.find();
+
+    // Render the Index view and pass logs as props
+    res.render("Index", { logs });
+  } catch (error) {
+    console.error("Error fetching logs:", error);
+    res.status(500).send("Error fetching logs");
+  }
 });
 
 /**
- * 
+ * Show Route
  */
+app.get("/logs/show", (req, res) => {
+  res.render("Show");
+});
 
 /**
  * New Route
@@ -68,16 +70,15 @@ app.post("/logs", async (req, res) => {
 
     // Save the log to the database
     await newLog.save();
+    console.log(newLog);
 
-    // Redirect to the show page for the created log (replace with your actual route)
-    res.redirect(`/logs/${newLog._id}`);
+    // Redirect to the show page for the created log
+    res.redirect("/logs/show");
   } catch (e) {
     console.error("Error creating log:", e);
     res.status(500).send("Error creating log");
   }
 });
 
-/**
- * Server
- */
+// Server Port
 app.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));
