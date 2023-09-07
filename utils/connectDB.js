@@ -1,13 +1,23 @@
+// connectDB.js
 const mongoose = require("mongoose");
 
 module.exports = function connectDB() {
-  // connecting to mongoDB
+  // Connecting to MongoDB
   mongoose.connect(process.env.MONGO_URI);
 
-  // check for connection
+  // Check for connection
   const db = mongoose.connection;
-  // on is like an event listener
-  db.on("error", (e) => console.log(e)); // on the event of an error
-  db.on("open", () => console.log("Connected to MongoDB")); // on the event when its open
-  db.on("close", () => console.log("MongoDB disconnected")); // on the event when its closed
+
+  // On is like an event listener
+  db.once("open", () => {
+    console.log("Connected to MongoDB"); // On the event when its open
+  });
+
+  db.on("error", (error) => {
+    console.error("MongoDB connection error:", error); // On the event of an error
+  });
+
+  db.on("close", () => {
+    console.log("MongoDB disconnected"); // On the event when its closed
+  });
 };
