@@ -22,6 +22,7 @@ connectDB();
 
 // Routes
 /**
+ * Test Route
  * @method get
  * @description checking to see if it works
  */
@@ -31,7 +32,7 @@ app.get("/", (req, res) => {
 });
 
 /**
- * New
+ * New Route
  * @name New
  * @method get
  * @description render new form
@@ -41,7 +42,14 @@ app.get("/logs/new", (req, res) => {
 });
 
 /**
- * Create
+ * Index route (GET)
+ */
+app.get("/logs", (req, res) => {
+  res.send("index");
+});
+
+/**
+ * Create Route
  * @name Create
  * @method post
  * @description
