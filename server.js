@@ -39,8 +39,22 @@ app.get("/logs", async (req, res) => {
 /**
  * Show Route
  */
-app.get("/logs/show", (req, res) => {
-  res.render("Show");
+app.get("/logs/:id", async (req, res) => {
+  try {
+    // Fetch the log by ID from the database
+    const log = await Log.findById(req.params.id);
+
+    if (!log) {
+      // Handle the case where the log with the provided ID is not found
+      return res.status(404).send("Log not found");
+    }
+
+    // Render the Show view and pass the log data as props
+    res.render("Show", { log });
+  } catch (e) {
+    console.error("Error fetching log:", e);
+    res.status(500).send("Error fetching log");
+  }
 });
 
 /**
@@ -59,24 +73,28 @@ app.get("/logs/new", (req, res) => {
  * @method post
  * @description
  */
+// Handle POST requests to the "/logs" route
 app.post("/logs", async (req, res) => {
   try {
-    // Create a new log using the Log model
+    // Create a new log using the Log model and data from the request body
     const newLog = new Log({
-      title: req.body.title,
-      entry: req.body.entry,
-      isShipBroken: req.body.shipIsBroken === "true",
+      title: req.body.title, // Extract the title from the request body
+      entry: req.body.entry, // Extract the entry from the request body
+      isShipBroken: req.body.shipIsBroken === "true", // Extract the shipIsBroken and convert it to a boolean
     });
 
-    // Save the log to the database
+    // Save the newly created log to the database
     await newLog.save();
+
+    // Log the new log object to the console for debugging purposes
     console.log(newLog);
 
     // Redirect to the show page for the created log
     res.redirect("/logs/show");
   } catch (e) {
-    console.error("Error creating log:", e);
-    res.status(500).send("Error creating log");
+    // If an error occurs during the try block, handle it here
+    console.error("Error creating log:", e); // Log the error message to the console
+    res.status(500).send("Error creating log"); // Send a 500 Internal Server Error response with an error message
   }
 });
 
