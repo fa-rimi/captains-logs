@@ -1,21 +1,26 @@
-const express = require("express"); // Import express
-const mongoose = require('mongoose'); // Import Mongoose
-require("dotenv").config(); // for .env
-
+const express = require("express");
 // forgot to add this line and got the error ReferenceError: app is not defined
 const app = express();
 const PORT = 3000;
+const connectDB = require("./utils/connectDB");
+const Log = require("./models/logs");
+
+// Load environment variables from a .env file
+require("dotenv").config();
 
 // Middleware -> To parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// the JSX view engine
+// The JSX view engine
 const jsxEngine = require("jsx-view-engine");
-// app config
 app.set("view engine", "jsx");
 app.engine("jsx", jsxEngine());
 
+// Connect to MongoDB
+// connectDB();
+
+// Routes
 /**
  * @method get
  * @description checking to see if it works
@@ -49,6 +54,4 @@ app.post("/logs", (req, res) => {
 /**
  * Server
  */
-app.listen(PORT, (req, res) => {
-  console.log(`Server is running on localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));
