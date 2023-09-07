@@ -18,7 +18,7 @@ app.set("view engine", "jsx");
 app.engine("jsx", jsxEngine());
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 
 // Routes
 /**
@@ -46,9 +46,24 @@ app.get("/logs/new", (req, res) => {
  * @method post
  * @description
  */
-app.post("/logs", (req, res) => {
-  // Instead of sending a static response, send the received data in req.body
-  res.send(req.body);
+app.post("/logs", async (req, res) => {
+  try {
+    // Create a new log using the Log model
+    const newLog = new Log({
+      title: req.body.title,
+      entry: req.body.entry,
+      isShipBroken: req.body.shipIsBroken === "true",
+    });
+
+    // Save the log to the database
+    await newLog.save();
+
+    // Redirect to the show page for the created log (replace with your actual route)
+    res.redirect(`/logs/${newLog._id}`);
+  } catch (e) {
+    console.error("Error creating log:", e);
+    res.status(500).send("Error creating log");
+  }
 });
 
 /**
