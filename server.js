@@ -98,24 +98,51 @@ app.post("/logs", async (req, res) => {
 /**
  * Delete
  * @method DELETE
- * @description Delete Log entry 
+ * @description Delete Log entry
  */
 app.delete("/logs/:id", async (req, res) => {
-    try {
-      // Find the log by ID and delete it
-      const log = await Log.findByIdAndDelete(req.params.id);
-  
-      if (!log) {
-        return res.status(404).send("Log not found");
-      }
-  
-      // Redirect to the index page after deleting the log
-      res.redirect("/logs");
-    } catch (e) {
-      console.error("Error deleting log:", e);
-      res.status(500).send("Error deleting log");
+  try {
+    // Find the log by ID and delete it
+    const deleteLog = await Log.findByIdAndDelete(req.params.id);
+
+    if (!deleteLog) {
+      return res.status(404).send("Log not found");
     }
-  });
+
+    // Redirect to the index page after deleting the log
+    res.redirect("/logs");
+  } catch (e) {
+    console.error("Error deleting log:", e);
+    res.status(500).send("Error deleting log");
+  }
+});
+
+// Add this route below your other routes in server.js
+
+/**
+ * Edit
+ * @name Edit
+ * @method get
+ * @description Render the edit form for a log entry
+ */
+app.get("/logs/:id/edit", async (req, res) => {
+  try {
+    // Fetch the log by ID from the database
+    const logToEdit = await Log.findById(req.params.id);
+
+    if (!logToEdit) {
+      // Handle the case where the log with the provided ID is not found
+      return res.status(404).send("Log not found");
+    }
+
+    // Render the Edit view and pass the log data as props
+    res.render("Edit", { logToEdit });
+    console.log("Rendering Edit view");
+  } catch (e) {
+    console.error("Error fetching log for edit:", e);
+    res.status(500).send("Error fetching log for edit");
+  }
+});
 
 // Start the server and listen on the specified port
 app.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));
