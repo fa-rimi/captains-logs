@@ -17,8 +17,13 @@ const New = () => {
         <br />
         {/* Checkbox for whether the ship is broken */}
         <label htmlFor="shipIsBroken">Is Ship Broken:</label>
-        <input type="checkbox" id="shipIsBroken" name="shipIsBroken" /><br />
-
+        <input
+          type="checkbox"
+          id="shipIsBroken"
+          name="shipIsBroken"
+          value="true"
+        />
+        <br />
         {/* Submit form: input type submit */}
         <input type="submit" value="Create Log" />
       </form>

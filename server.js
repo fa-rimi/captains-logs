@@ -24,12 +24,24 @@ app.get("/", (req, res) => {
 });
 
 /**
+ * New
  * @name New
  * @method get
  * @description render new form
  */
 app.get("/logs/new", (req, res) => {
-    res.render("New")
+  res.render("New");
+});
+
+/**
+ * Create
+ * @name Create
+ * @method post
+ * @description
+ */
+app.post("/logs", (req, res) => {
+  // Instead of sending a static response, send the received data in req.body
+  res.send(req.body);
 });
 
 /**
